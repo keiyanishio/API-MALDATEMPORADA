@@ -18,7 +18,7 @@ def api_anime(request, anime_id):
     if request.method == 'POST':
         new_anime_data = request.data
         anime.title = new_anime_data['title']
-        anime.content = new_anime_data['img']
+        anime.img = new_anime_data['img']
         anime.mal_id = new_anime_data['mal_id']
         anime.save()
 
@@ -32,7 +32,7 @@ def api_anime_list(request):
         new_anime_data = request.data
         anime = Anime()
         anime.title = new_anime_data["title"]
-        anime.content = new_anime_data['img']
+        anime.img = new_anime_data['img']
         anime.mal_id = new_anime_data['mal_id']
         anime.save()
 
