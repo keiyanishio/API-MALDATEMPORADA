@@ -8,7 +8,7 @@ from django.http import Http404
 from .serializers import AnimeSerializer
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'DELETE'])
 def api_anime(request, anime_id):
     try:
         anime = Anime.objects.get(id=anime_id)
@@ -21,6 +21,11 @@ def api_anime(request, anime_id):
         anime.img = new_anime_data['img']
         anime.mal_id = new_anime_data['mal_id']
         anime.save()
+
+    elif request.method == 'DELETE':
+        anime = Anime()
+        anime.id = anime_id
+        anime.delete()
 
     serialized_anime = AnimeSerializer(anime)
     return Response(serialized_anime.data)
@@ -58,3 +63,4 @@ def index(request):
         
         serialized_animes = AnimeSerializer(animes, many=True)
         return Response(serialized_animes.data)
+
