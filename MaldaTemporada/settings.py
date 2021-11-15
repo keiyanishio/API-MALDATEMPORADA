@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-lzx79bcm%t-74k(609u1a$l%qorovpdm$2)l3$^7_$p(h2l(yl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
-CORS_ORIGIN_ALLOW_ALL=True
+ALLOWED_HOSTS = ['api-mal-da-temporada.herokuapp.com', 'localhost', '127.0.0.1']
+CORS_ORIGIN_ALLOW_ALL=False
 
 # Application definition
 
@@ -78,14 +78,11 @@ WSGI_APPLICATION = 'MaldaTemporada.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'animes',
-        'USER': 'animesuser',
-        'PASSWORD': 'animessenha',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default='postgresql://localhost/animes?user=animesuser&password=animessenha',
+        conn_max_age=600,
+        ssl_require=not DEBUG
+    )
 }
 
 # Password validation
